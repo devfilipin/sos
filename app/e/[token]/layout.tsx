@@ -1,0 +1,1 @@
+import type{Metadata}from"next";export const metadata:Metadata={title:"Emergência | Resolveu SOS",description:"Perfil de emergência Resolveu SOS.",robots:{index:false,follow:false,noarchive:true}};export default function EmergencyLayout({children}:{children:React.ReactNode}){return children}

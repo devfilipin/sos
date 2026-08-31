@@ -1,0 +1,42 @@
+:root {
+  --bg: #f7fbff;
+  --panel: #ffffff;
+  --cyan: #45b8dc;
+  --blue: #328bd5;
+  --purple: #8c50ce;
+  --text: #18233b;
+  --muted: #61708a;
+  --line: #dce7f2;
+}
+
+body { background: linear-gradient(180deg, #fff 0%, #f5faff 58%, #faf7ff 100%); color: var(--text); }
+.nav { background: #ffffffd9; border-color: #dce7f2; }
+.nav > div { color: #53637c; }
+.nav button, .actions a { color: #263652; border-color: #cbd9e8; }
+.hero { position: relative; }
+.hero::before { content: ""; position: absolute; inset: 3% 0 auto 42%; height: 430px; background: radial-gradient(circle, #68c8e52e, #9b67d61a 45%, transparent 70%); pointer-events: none; }
+.lead, .hero > div > small, .lookup p, .how p, .security p { color: var(--muted); }
+.primary, form button { background: linear-gradient(110deg, #55c2df, #438ed9 55%, #8c50ce); color: #fff; box-shadow: 0 10px 25px #458fd52b; }
+.visual > i { background: radial-gradient(circle, #55c2df2e, #8c50ce1c 48%, transparent 70%); }
+.tag { background: linear-gradient(145deg, #fff, #eaf5fc 46%, #f4ebfb); border-color: #aed8ea; box-shadow: inset 0 0 28px #fff, 0 28px 65px #446c9c29; }
+.tag > span { color: #30435d; }
+.visual label { background: #fff; border-color: #cae0ed; color: #52667e; }
+.lookup { background: linear-gradient(110deg, #edf9fd, #f6f1fc); border-color: #d8e7f1; }
+input { background: #fff; color: #1a2c49; border-color: #bfd1e1; }
+input:focus { border-color: var(--blue); box-shadow: 0 0 0 4px #438ed91c; }
+.steps article { background: #fff; border-color: #dce7f2; box-shadow: 0 14px 38px #496c9410; }
+.steps article > span { color: #dae5ef; }
+.steps i { background: #eaf7fc; color: var(--blue); }
+.security { background: linear-gradient(120deg, #e9f8fd, #f4edfb); border-color: #cbe2ef; }
+.security li { border-color: #cbdcea; }
+footer { background: #fff; border-color: #dce7f2; color: #61708a; }
+footer > small { border-color: #dce7f2; }
+.modal-backdrop { background: #dfeaf3c7; backdrop-filter: blur(14px); }
+.emergency-modal { background: linear-gradient(145deg, #fff, #f3faff 62%, #faf5ff); border-color: #d4e4ef; box-shadow: 0 30px 90px #354e6f38; }
+.modal-close, .emergency-modal .continue-site { color: #64738a; }
+.appShell { background: radial-gradient(circle at 50% 10%, #e6f7fc, #f7fbff 48%, #f7f1fc); color: var(--text); }
+.formCard { background: #fff; border-color: #d8e5ef; box-shadow: 0 24px 70px #3c628a1c; }
+.formCard p, .formCard form > small { color: var(--muted); }
+.dashboard aside, .emergency > header { background: linear-gradient(160deg, #edf9fd, #f3ecfb); color: #243552; border-right: 1px solid #d6e5ef; }
+.dashboard aside nav a { color: #62718a; }
+.dashboard aside nav a.active { background: #fff; color: var(--blue); }
