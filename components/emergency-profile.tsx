@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { TurnstileField } from "@/components/auth/turnstile-field";

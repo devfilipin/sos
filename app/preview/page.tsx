@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { EmergencyProfileData, EmergencyProfileView } from "@/components/emergency-profile-view";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";

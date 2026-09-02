@@ -16,10 +16,10 @@ export function TurnstileField({ onToken }: Props) {
         siteKey={siteKey}
         onSuccess={(token) => { setError(false); onToken(token); }}
         onExpire={() => onToken(null)}
-        onError={() => { setError(true); onToken(null); }}
+        onError={(errorCode) => { setError(true); onToken(null); console.error("Turnstile error", errorCode); }}
         options={{ theme: "light", language: "pt-BR", size: "flexible" }}
       />
     </div>
-    {error && <p className="captchaError" role="alert">A verificação de segurança não carregou. Se estiver usando o ambiente local, autorize <b>localhost</b> no widget Turnstile e recarregue a página.</p>}
+    {error && <p className="captchaError" role="alert">A verificação de segurança não carregou. Recarregue a página. Se o problema continuar, avise o suporte.</p>}
   </div>;
 }

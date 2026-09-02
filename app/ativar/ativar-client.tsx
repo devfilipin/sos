@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { FormEvent, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 const CODE_PATTERN=/^[23456789ABCDEFGHJKMNPQRSTUVWXYZ]{5}$/;

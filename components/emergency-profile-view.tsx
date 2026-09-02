@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element -- signed Storage URLs are intentionally rendered without Next's image proxy */
-import Link from "next/link";
+import Link from "@/components/app-link";
 
 export type EmergencyContact = {
   name: string;
