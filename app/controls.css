@@ -1,0 +1,125 @@
+button,
+.primary,
+.secondary,
+.danger,
+.linkButton {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+}
+
+button:focus-visible,
+.primary:focus-visible,
+.secondary:focus-visible,
+.danger:focus-visible,
+.linkButton:focus-visible {
+  outline: 3px solid #328bd555;
+  outline-offset: 3px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+
+/* O botão quadrado só pertence às consultas por código. */
+.lookup form button,
+.emergency-modal form button {
+  width: 56px;
+  min-width: 56px;
+  min-height: 54px;
+  padding: 0;
+  font-size: 24px;
+}
+
+.authForm button,
+.formCard form button,
+.emergencyLookup button,
+.publishCard .primary,
+.saveButton {
+  width: 100%;
+}
+
+.dashboard > section > header > .primary {
+  min-width: 138px;
+  white-space: nowrap;
+}
+
+.createProfile > .primary {
+  grid-column: 1 / -1;
+  width: max-content;
+  min-width: 190px;
+}
+
+.logoutForm {
+  width: 100%;
+}
+
+.logoutButton {
+  width: 100%;
+  background: #fff;
+  color: #34455f;
+  border: 1px solid #cad8e4;
+  box-shadow: none;
+}
+
+.table form {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 120px max-content;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.table form input {
+  width: 100%;
+  min-height: 44px;
+}
+
+.table form .primary {
+  width: auto;
+  min-width: 180px;
+  white-space: nowrap;
+}
+
+.addContact .secondary {
+  width: auto;
+  min-width: 150px;
+  white-space: nowrap;
+}
+
+.table textarea {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid #d7e0e6;
+  border-radius: 10px;
+  resize: vertical;
+}
+
+@media (max-width: 800px) {
+  .dashboard > section > header {
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .table form {
+    grid-template-columns: 1fr;
+  }
+
+  .table form .primary,
+  .createProfile > .primary,
+  .addContact .secondary {
+    width: 100%;
+  }
+}
