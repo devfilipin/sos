@@ -46,9 +46,10 @@ export default function SegurancaClient() {
   }
 
   return <main className="authPage"><section className="authCard securityCard">
-    <p className="kicker">SEGURANÇA DA CONTA</p><h1>Autenticação em duas etapas</h1>
+    <p className="kicker">SEGURANÇA OPCIONAL</p><h1>Autenticação em duas etapas</h1>
+    <p>Você pode ativar esta proteção extra quando quiser. Ela só é obrigatória para acessar a área administrativa.</p>
     <p>Status atual: <strong>{level === "aal2" ? "MFA verificado" : "senha verificada"}</strong>.</p>
-    {!verifiedFactorId && !enrollment && level !== "aal2" && <button className="primary securityAction" onClick={startEnrollment}>Configurar aplicativo autenticador</button>}
+    {!verifiedFactorId && !enrollment && level !== "aal2" && <button className="primary securityAction" onClick={startEnrollment}>Ativar proteção em duas etapas</button>}
     {verifiedFactorId && level !== "aal2" && <form className="authForm" onSubmit={verify}>
       <p>Digite o código atual do seu aplicativo autenticador para continuar.</p>
       <label htmlFor="mfa-login-code">Código de 6 dígitos</label><input id="mfa-login-code" value={code} onChange={(event)=>setCode(event.target.value.replace(/\D/g,"").slice(0,6))} inputMode="numeric" autoComplete="one-time-code"/>
@@ -62,6 +63,6 @@ export default function SegurancaClient() {
       <button className="primary">Confirmar e ativar</button>
     </form>}
     {message && <p className={message.includes("sucesso") ? "formSuccess" : "formError"} role="status">{message}</p>}
-    <div className="authLinks"><Link href="/painel">← Voltar ao painel</Link><form action="/auth/sair" method="post"><button className="textButton">Sair</button></form></div>
+    <div className="authLinks"><Link href={next}>Agora não — continuar sem ativar</Link><form action="/auth/sair" method="post"><button className="textButton">Sair</button></form></div>
   </section></main>;
 }

@@ -11,7 +11,7 @@ export default function ContaClient() {
 
   async function exportData() {
     setBusy(true);
-    const { data, error } = await createClient().functions.invoke("export-my-data");
+    const { data, error } = await createClient().functions.invoke("export-my-data", { body: {} });
     setBusy(false);
     if (error) return setMessage("Não foi possível gerar a exportação.");
     const blob = new Blob([JSON.stringify(data.export, null, 2)], { type: "application/json" });
@@ -19,8 +19,10 @@ export default function ContaClient() {
     const anchor = document.createElement("a");
     anchor.href = url;
     anchor.download = `resolveu-sos-export-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(anchor);
     anchor.click();
-    URL.revokeObjectURL(url);
+    anchor.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
     setMessage("Exportação gerada no seu dispositivo.");
   }
 
@@ -28,7 +30,7 @@ export default function ContaClient() {
     if (confirmation !== "EXCLUIR MINHA CONTA") return;
     setBusy(true);
     const { error } = await createClient().functions.invoke("delete-my-account", { body: { confirmation } });
-    if (error) { setBusy(false); return setMessage("Entre novamente e tente de novo. Se persistir, contate resolveulab@gmail.com."); }
+    if (error) { setBusy(false); return setMessage("Por segurança, entre novamente e volte a esta página para confirmar a exclusão."); }
     location.assign("/");
   }
 

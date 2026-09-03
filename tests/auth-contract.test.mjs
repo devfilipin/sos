@@ -35,13 +35,14 @@ test("rotas privadas validam claims e admin exige app_metadata mais AAL2", async
   assert.doesNotMatch(admin, /user_metadata/);
 });
 
-test("MFA usa TOTP com challengeAndVerify", async () => {
+test("MFA usa TOTP, é opcional para contas comuns e obrigatório no admin", async () => {
   const [security, signin] = await Promise.all([read("../app/seguranca/seguranca-client.tsx"), read("../app/entrar/page.tsx")]);
   assert.match(security, /factorType: "totp"/);
   assert.match(security, /listFactors/);
   assert.match(security, /challengeAndVerify/);
-  assert.match(signin, /getAuthenticatorAssuranceLevel/);
-  assert.match(signin, /nextLevel === "aal2"/);
+  assert.match(signin, /location\.assign\(next\)/);
+  assert.doesNotMatch(signin, /getAuthenticatorAssuranceLevel/);
+  assert.match(security, /Agora não — continuar sem ativar/);
 });
 
 test("callback restringe redirecionamento e troca código por sessão", async () => {

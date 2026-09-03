@@ -26,10 +26,7 @@ export default function Entrar() {
       options: { captchaToken },
     });
     if (error) { setMessage("Não foi possível entrar. Confira os dados e tente novamente."); setBusy(false); return; }
-    const { data: assurance } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-    location.assign(assurance?.nextLevel === "aal2" && assurance.currentLevel !== "aal2"
-      ? `/seguranca?next=${encodeURIComponent(next)}`
-      : next);
+    location.assign(next);
   }
 
   return <AuthShell eyebrow="ACESSO SEGURO" title="Entrar na sua conta">

@@ -11,6 +11,7 @@ test("estilos de botões são carregados por último e preservam ações largas"
   assert.match(controls, /\.createProfile > \.primary[\s\S]*min-width: 190px/);
   assert.match(controls, /\.logoutButton[\s\S]*width: 100%/);
   assert.match(controls, /\.lookup form button,[\s\S]*width: 56px/);
+  assert.match(controls, /button\.toggle[\s\S]*min-height: 24px/);
 });
 
 test("navegação interna não depende do next/link incompatível com o Worker", async () => {

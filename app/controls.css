@@ -31,6 +31,18 @@ button:disabled {
   opacity: .55;
 }
 
+/* Controles binários têm dimensões próprias e não herdam o botão de ação. */
+button.toggle {
+  width: 42px;
+  min-width: 42px;
+  height: 24px;
+  min-height: 24px;
+  padding: 3px;
+  border-radius: 20px;
+  display: block;
+  line-height: 1;
+}
+
 /* O botão quadrado só pertence às consultas por código. */
 .lookup form button,
 .emergency-modal form button {
