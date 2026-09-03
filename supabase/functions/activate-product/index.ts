@@ -1,4 +1,36 @@
-import{createClient}from"npm:@supabase/supabase-js@2.112.3";import{preflight,response}from"../_shared/http.ts";
-const genericError="Não foi possível ativar o produto. Confira os códigos e tente novamente.";const encoder=new TextEncoder();
-async function originHash(req:Request,pepper:string){const forwarded=req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();const origin=forwarded||req.headers.get("cf-connecting-ip")||"unknown";const digest=await crypto.subtle.digest("SHA-256",encoder.encode(`${pepper}:${origin}`));return`\\x${Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,"0")).join("")}`}
-Deno.serve(async req=>{if(req.method==="OPTIONS")return preflight(req);if(req.method!=="POST")return response(req,{error:"Método não permitido"},405);try{const token=(req.headers.get("authorization")||"").replace(/^Bearer\s+/i,"");const url=Deno.env.get("SUPABASE_URL");const secretKey=Deno.env.get("SUPABASE_SECRET_KEY");if(!url||!secretKey)return response(req,{error:genericError},500);const admin=createClient(url,secretKey,{auth:{persistSession:false,autoRefreshToken:false}});const{data:{user},error:userError}=await admin.auth.getUser(token);if(userError||!user)return response(req,{error:"Sua sessão expirou. Entre novamente."},401);const body=await req.json();const profileId=typeof body.profileId==="string"?body.profileId:"";const publicCode=typeof body.publicCode==="string"?body.publicCode.trim().toUpperCase():"";const activationSecret=typeof body.activationSecret==="string"?body.activationSecret:"";if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(profileId)||!/^[23456789ABCDEFGHJKMNPQRSTUVWXYZ]{5}$/.test(publicCode)||activationSecret.length<12||activationSecret.length>256)return response(req,{error:genericError},400);const{data,error}=await admin.rpc("server_activate_product",{p_user_id:user.id,p_profile_id:profileId,p_public_code:publicCode,p_activation_secret:activationSecret,p_origin_hash:await originHash(req,secretKey)});if(error||!data)return response(req,{error:genericError},400);return response(req,{ok:true})}catch{return response(req,{error:genericError},400)}});
+import { createClient } from "npm:@supabase/supabase-js@2.112.3";
+import { preflight, response } from "../_shared/http.ts";
+
+const genericError = "Não foi possível ativar o produto. Confira os códigos e tente novamente.";
+const encoder = new TextEncoder();
+
+async function originHash(req: Request, pepper: string) {
+  const forwarded = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const origin = forwarded || req.headers.get("cf-connecting-ip") || "unknown";
+  const digest = await crypto.subtle.digest("SHA-256", encoder.encode(`${pepper}:${origin}`));
+  return `\\x${Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("")}`;
+}
+
+Deno.serve(async req => {
+  if (req.method === "OPTIONS") return preflight(req);
+  if (req.method !== "POST") return response(req, { error: "Método não permitido" }, 405);
+  try {
+    const token = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "");
+    const url = Deno.env.get("SUPABASE_URL");
+    const secretKey = Deno.env.get("SUPABASE_SECRET_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!url || !secretKey) return response(req, { error: genericError }, 500);
+    const admin = createClient(url, secretKey, { auth: { persistSession: false, autoRefreshToken: false } });
+    const { data: { user }, error: userError } = await admin.auth.getUser(token);
+    if (userError || !user) return response(req, { error: "Sua sessão expirou. Entre novamente." }, 401);
+    const body = await req.json();
+    const profileId = typeof body.profileId === "string" ? body.profileId : "";
+    const publicCode = typeof body.publicCode === "string" ? body.publicCode.trim().toUpperCase() : "";
+    const activationSecret = typeof body.activationSecret === "string" ? body.activationSecret : "";
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(profileId) || !/^[23456789ABCDEFGHJKMNPQRSTUVWXYZ]{5}$/.test(publicCode) || activationSecret.length < 12 || activationSecret.length > 256) return response(req, { error: genericError }, 400);
+    const { data, error } = await admin.rpc("server_activate_product", { p_user_id: user.id, p_profile_id: profileId, p_public_code: publicCode, p_activation_secret: activationSecret, p_origin_hash: await originHash(req, secretKey) });
+    if (error || !data) return response(req, { error: genericError }, 400);
+    return response(req, { ok: true });
+  } catch {
+    return response(req, { error: genericError }, 400);
+  }
+});
